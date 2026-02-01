@@ -1,20 +1,19 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/components/Navbar";
+import Sidebar from "@/components/Sidebar";
+import Footer from "@/components/Footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "복지사단 팬페이지 | 피터패트",
-  description: "복지사단(수장 피터패트) 팬페이지. 실시간 방송, 편성표, 후원, 게스트 예약",
+  title: "복지사단 | 피터패트",
+  description: "복지사단(수장 피터패트) 공식 팬페이지. 라이브, 조직도, 게시판, 후원",
 };
 
 export default function RootLayout({
@@ -24,10 +23,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className="dark">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
-      >
-        {children}
+      <body className={`${inter.variable} antialiased bg-[#050505] text-foreground min-h-screen flex flex-col`}>
+        <Navbar />
+        <div className="relative z-10 flex flex-1">
+          <main className="min-w-0 flex-1">
+            {children}
+          </main>
+          <Sidebar />
+        </div>
+        <Footer />
       </body>
     </html>
   );

@@ -7,6 +7,7 @@ export default function ReserveForm() {
   const [age, setAge] = useState("");
   const [contact, setContact] = useState("");
   const [reason, setReason] = useState("");
+  const [date, setDate] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
 
@@ -24,6 +25,7 @@ export default function ReserveForm() {
           age: age.trim() || undefined,
           contact: contact.trim() || undefined,
           reason: reason.trim() || undefined,
+          preferredDate: date || undefined,
         }),
       });
       const data = await res.json();
@@ -40,24 +42,32 @@ export default function ReserveForm() {
       setAge("");
       setContact("");
       setReason("");
+      setDate("");
     } catch {
       setStatus("error");
       setMessage("네트워크 오류가 발생했습니다.");
     }
   };
 
+  const inputClass =
+    "w-full px-4 py-3 rounded-xl bg-zinc-800/80 border border-zinc-600 text-foreground placeholder-zinc-500 focus:border-[#ff4d00] focus:ring-2 focus:ring-[#ff4d00]/20 transition-all";
+
   return (
-    <section className="py-12 px-4" id="reserve">
-      <h2 className="text-2xl md:text-3xl font-bold text-center text-orange-400 mb-8">
-        게스트 예약 (야킹/술먹방 등)
+    <section className="py-14 md:py-20 px-4" id="reserve">
+      <h2 className="section-title text-2xl md:text-3xl text-center mb-4">
+        게스트 예약
       </h2>
+      <p className="text-center text-zinc-500 text-sm mb-8 max-w-md mx-auto">
+        야킹·술먹방 등 게스트로 참여를 원하시면 희망 일정과 함께 신청해 주세요.
+      </p>
+
       <form
         onSubmit={handleSubmit}
-        className="max-w-md mx-auto rounded-xl bg-zinc-800/80 border border-zinc-700 p-6 space-y-4"
+        className="section-card max-w-md mx-auto p-6 md:p-8 space-y-5 border-[#262626]"
       >
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-zinc-300 mb-1">
-            이름 <span className="text-orange-400">*</span>
+          <label htmlFor="name" className="block text-sm font-medium text-zinc-400 mb-1.5">
+            이름 <span className="text-[#ff4d00]">*</span>
           </label>
           <input
             id="name"
@@ -65,12 +75,12 @@ export default function ReserveForm() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
-            className="w-full px-3 py-2 rounded-lg bg-zinc-700 border border-zinc-600 text-foreground placeholder-zinc-500 focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
+            className={inputClass}
             placeholder="닉네임 또는 이름"
           />
         </div>
         <div>
-          <label htmlFor="age" className="block text-sm font-medium text-zinc-300 mb-1">
+          <label htmlFor="age" className="block text-sm font-medium text-zinc-400 mb-1.5">
             나이
           </label>
           <input
@@ -78,12 +88,12 @@ export default function ReserveForm() {
             type="text"
             value={age}
             onChange={(e) => setAge(e.target.value)}
-            className="w-full px-3 py-2 rounded-lg bg-zinc-700 border border-zinc-600 text-foreground placeholder-zinc-500 focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
+            className={inputClass}
             placeholder="선택"
           />
         </div>
         <div>
-          <label htmlFor="contact" className="block text-sm font-medium text-zinc-300 mb-1">
+          <label htmlFor="contact" className="block text-sm font-medium text-zinc-400 mb-1.5">
             연락처
           </label>
           <input
@@ -91,19 +101,32 @@ export default function ReserveForm() {
             type="text"
             value={contact}
             onChange={(e) => setContact(e.target.value)}
-            className="w-full px-3 py-2 rounded-lg bg-zinc-700 border border-zinc-600 text-foreground placeholder-zinc-500 focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
+            className={inputClass}
             placeholder="연락 가능한 수단"
           />
         </div>
         <div>
-          <label htmlFor="reason" className="block text-sm font-medium text-zinc-300 mb-1">
+          <label htmlFor="date" className="block text-sm font-medium text-zinc-400 mb-1.5">
+            희망 일정 (날짜 선택)
+          </label>
+          <input
+            id="date"
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            className={inputClass}
+            min={new Date().toISOString().split("T")[0]}
+          />
+        </div>
+        <div>
+          <label htmlFor="reason" className="block text-sm font-medium text-zinc-400 mb-1.5">
             신청 사유
           </label>
           <select
             id="reason"
             value={reason}
             onChange={(e) => setReason(e.target.value)}
-            className="w-full px-3 py-2 rounded-lg bg-zinc-700 border border-zinc-600 text-foreground focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
+            className={inputClass}
           >
             <option value="">선택</option>
             <option value="야킹">야킹</option>
@@ -113,8 +136,10 @@ export default function ReserveForm() {
         </div>
         {message && (
           <p
-            className={`text-sm ${
-              status === "success" ? "text-green-400" : "text-red-400"
+            className={`text-sm py-2 px-3 rounded-lg ${
+              status === "success"
+                ? "bg-green-500/10 text-green-400 border border-green-500/20"
+                : "bg-red-500/10 text-red-400 border border-red-500/20"
             }`}
           >
             {message}
@@ -123,7 +148,7 @@ export default function ReserveForm() {
         <button
           type="submit"
           disabled={status === "loading"}
-          className="w-full py-3 rounded-lg bg-orange-500 hover:bg-orange-600 disabled:opacity-50 text-white font-semibold transition-colors"
+          className="w-full py-3.5 rounded-xl bg-[#ff4d00] hover:bg-[#e64500] disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold transition-all active:scale-[0.99]"
         >
           {status === "loading" ? "접수 중..." : "예약 신청"}
         </button>

@@ -7,11 +7,12 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, age, contact, reason } = body as {
+    const { name, age, contact, reason, preferredDate } = body as {
       name?: string;
       age?: string;
       contact?: string;
       reason?: string;
+      preferredDate?: string;
     };
 
     if (!name?.trim()) {
@@ -37,6 +38,7 @@ export async function POST(request: NextRequest) {
       `이름: ${name}`,
       `나이: ${age ?? "-"}`,
       `연락처: ${contact ?? "-"}`,
+      `희망 일정: ${preferredDate ?? "-"}`,
       `신청 사유: ${reason ?? "-"}`,
     ].join("\n");
 
