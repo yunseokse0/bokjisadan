@@ -86,12 +86,18 @@ export default function HeroSection() {
 
   const thumbnailVideoId = displayVideoId ?? fallbackVideoId;
   const embedVideoId = displayVideoId ?? fallbackVideoId;
+  // API 응답 받기 전에는 배경 img 요청 안 함. API가 같은 대표 영상 ID만 주면(비공개) 썸네일도 요청 안 함 → 404 방지
+  const useThumbnail =
+    !loading &&
+    thumbnailVideoId &&
+    !thumbnailError &&
+    thumbnailVideoId !== fallbackVideoId;
 
   return (
     <section className="relative w-full min-h-[60vh] sm:min-h-[70vh] flex flex-col items-center justify-center overflow-hidden">
-      {/* 배경: 썸네일 404 시 그라데이션으로 대체 */}
+      {/* 배경: 로딩 중·비공개 대표 영상일 땐 그라데이션만, API에서 받은 영상 ID일 때만 썸네일 요청 */}
       <div className="absolute inset-0">
-        {thumbnailVideoId && !thumbnailError ? (
+        {useThumbnail ? (
           <>
             <img
               src={getYoutubeThumbnailUrl(

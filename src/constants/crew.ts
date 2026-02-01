@@ -3,8 +3,8 @@
  * 수장: 피터패트 (유튜브)
  */
 
-/** 복지사단 유튜브 채널 · 대표 영상 링크 */
-export const YOUTUBE_CHANNEL_VIDEO = "https://www.youtube.com/watch?v=Ea3FhctM0v8";
+/** 복지사단 유튜브 채널 · 대표/현재 라이브 영상 링크 (방송 바뀌면 여기만 수정) */
+export const YOUTUBE_CHANNEL_VIDEO = "https://www.youtube.com/watch?v=DNH6taYZlA4";
 
 /** 채널 ID (UC로 시작). 서버 env 없을 때 API에 전달용. 채널 페이지 URL의 /channel/UC... 부분 */
 export const YOUTUBE_CHANNEL_ID = "UCTjLrH_VkssSD-VC5Qog-VA";

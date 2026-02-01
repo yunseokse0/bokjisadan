@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic";
+
 /**
  * 채널의 현재 라이브 방송 영상 ID 조회
  * - YOUTUBE_CHANNEL_ID가 있으면: 해당 채널로 바로 라이브 검색
@@ -15,7 +17,12 @@ export async function GET(request: NextRequest) {
 
   if (!apiKey) {
     return NextResponse.json(
-      { liveVideoId: null, fallbackVideoId: videoId ?? null, isLive: false },
+      {
+        liveVideoId: null,
+        fallbackVideoId: videoId ?? null,
+        isLive: false,
+        message: "YOUTUBE_API_KEY를 Vercel 환경 변수에 설정하면 채널 최신 영상·라이브를 가져옵니다.",
+      },
       { status: 200 }
     );
   }
@@ -63,8 +70,8 @@ export async function GET(request: NextRequest) {
     const liveItem = searchData.items?.[0];
     const liveVideoId = liveItem?.id?.videoId ?? null;
 
-    // 라이브 없을 때: 채널 ID가 있으면 채널 최신 업로드 1개를 fallback으로 사용 (비공개 영상 404 방지)
-    if (!liveVideoId && envChannelId) {
+    // 라이브 없을 때: 채널 ID가 있으면(env 또는 쿼리) 채널 최신 업로드 1개를 fallback으로 사용 (비공개 영상 404 방지)
+    if (!liveVideoId && channelIdFromEnvOrParam) {
       try {
         const latestRes = await fetch(
           `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&order=date&type=video&maxResults=1&key=${apiKey}`,
