@@ -50,7 +50,7 @@ export default function ReserveForm() {
   };
 
   const inputClass =
-    "w-full px-4 py-3 rounded-xl bg-zinc-800/80 border border-zinc-600 text-foreground placeholder-zinc-500 focus:border-[#ff4d00] focus:ring-2 focus:ring-[#ff4d00]/20 transition-all";
+    "w-full px-4 py-3 rounded-xl bg-zinc-800/80 border border-zinc-600 text-foreground placeholder-zinc-500 focus:border-zinc-500 focus:ring-2 focus:ring-white/10 transition-all";
 
   return (
     <section className="py-14 md:py-20 px-4" id="reserve">
@@ -67,7 +67,7 @@ export default function ReserveForm() {
       >
         <div>
           <label htmlFor="name" className="block text-sm font-medium text-zinc-400 mb-1.5">
-            이름 <span className="text-[#ff4d00]">*</span>
+            이름 <span className="text-zinc-500">*</span>
           </label>
           <input
             id="name"
@@ -148,7 +148,7 @@ export default function ReserveForm() {
         <button
           type="submit"
           disabled={status === "loading"}
-          className="w-full py-3.5 rounded-xl bg-[#ff4d00] hover:bg-[#e64500] disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold transition-all active:scale-[0.99]"
+          className="w-full py-3.5 rounded-xl bg-white text-black font-semibold transition-all hover:bg-zinc-200 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.99]"
         >
           {status === "loading" ? "접수 중..." : "예약 신청"}
         </button>

@@ -24,7 +24,7 @@ export default function Footer() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-sm text-zinc-400 hover:text-[#ff4d00] transition-colors"
+                className="text-sm text-zinc-400 hover:text-white transition-colors"
               >
                 {item.label}
               </Link>

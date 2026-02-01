@@ -38,7 +38,7 @@ export default function Navbar() {
       <nav className="mx-auto flex h-14 min-h-[44px] max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link
           href="/"
-          className="flex items-center gap-2 font-bold tracking-tight text-foreground hover:text-[#ff4d00] transition-colors min-h-[44px] items-center"
+          className="flex items-center gap-2 font-bold tracking-tight text-foreground hover:text-zinc-300 transition-colors min-h-[44px] items-center"
         >
           <span className="text-lg">복지사단</span>
         </Link>
@@ -52,7 +52,7 @@ export default function Navbar() {
                 key={item.href}
                 href={item.href}
                 className={`nav-link-underline px-4 py-2 text-sm font-medium transition-colors min-h-[44px] flex items-center ${
-                  isActive ? "text-[#ff4d00]" : "text-zinc-300 hover:text-white"
+                  isActive ? "text-white" : "text-zinc-400 hover:text-white"
                 }`}
               >
                 {item.label}
@@ -66,7 +66,7 @@ export default function Navbar() {
             href={TELEGRAM_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex h-10 w-10 min-h-[44px] min-w-[44px] items-center justify-center rounded-lg bg-white/5 text-zinc-400 hover:bg-[#ff4d00]/20 hover:text-[#ff4d00] transition-colors"
+            className="flex h-10 w-10 min-h-[44px] min-w-[44px] items-center justify-center rounded-lg bg-white/5 text-zinc-400 hover:bg-white/10 hover:text-white transition-colors"
             aria-label="텔레그램"
           >
             <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
@@ -111,8 +111,8 @@ export default function Navbar() {
                 href={item.href}
                 className={`flex items-center min-h-[48px] px-4 py-3 text-base font-medium rounded-xl transition-colors ${
                   isActive
-                    ? "text-[#ff4d00] bg-[#ff4d00]/10"
-                    : "text-zinc-300 hover:bg-white/10 hover:text-white"
+                    ? "text-white bg-white/10"
+                    : "text-zinc-400 hover:bg-white/10 hover:text-white"
                 }`}
               >
                 {item.label}

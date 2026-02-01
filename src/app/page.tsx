@@ -11,25 +11,25 @@ export default function Home() {
         <div className="grid gap-8 md:grid-cols-2">
           <Link
             href="/live"
-            className="section-card group block overflow-hidden rounded-xl p-6 transition-all hover:border-[#ff4d00]/40"
+            className="section-card group block overflow-hidden rounded-xl p-6 transition-all"
           >
             <h2 className="section-title text-xl md:text-2xl">실시간 라이브</h2>
             <p className="mt-2 text-sm text-zinc-400">
               피터패트님의 현재 방송을 한곳에서 확인하세요.
             </p>
-            <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-[#ff4d00] group-hover:underline">
+            <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-zinc-300 group-hover:text-white transition-colors">
               라이브 센터 →
             </span>
           </Link>
           <Link
             href="/sadan"
-            className="section-card group block overflow-hidden rounded-xl p-6 transition-all hover:border-[#ff4d00]/40"
+            className="section-card group block overflow-hidden rounded-xl p-6 transition-all"
           >
             <h2 className="section-title text-xl md:text-2xl">복지사단 소개</h2>
             <p className="mt-2 text-sm text-zinc-400">
               수장 피터패트와 조직도를 확인하세요.
             </p>
-            <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-[#ff4d00] group-hover:underline">
+            <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-zinc-300 group-hover:text-white transition-colors">
               조직도 보기 →
             </span>
           </Link>
@@ -44,7 +44,7 @@ export default function Home() {
           </Link>
           <Link
             href="/support"
-            className="rounded-lg border border-[#ff4d00]/40 bg-[#ff4d00]/10 px-5 py-2.5 text-sm font-medium text-[#ff4d00] transition-colors hover:bg-[#ff4d00]/20"
+            className="rounded-lg border border-white/20 bg-white/5 px-5 py-2.5 text-sm font-medium text-zinc-300 transition-colors hover:bg-white/10 hover:text-white"
           >
             후원 & 명예의 전당
           </Link>

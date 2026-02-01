@@ -36,29 +36,78 @@ function getVideoId(url: string): string | null {
 export default function LiveGrid() {
   const [items, setItems] = useState<LiveItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [thumbnailFailedIds, setThumbnailFailedIds] = useState<Set<string>>(new Set());
 
+  const fallbackVideoId = getVideoId(YOUTUBE_CHANNEL_VIDEO);
+
+  // 1) 채널 현재 라이브 ID 조회 → 표시할 영상 ID 결정
   useEffect(() => {
+    if (!fallbackVideoId) {
+      setItems([
+        {
+          id: "1",
+          title: "복지사단 야킹 라이브",
+          channelName: "피터패트",
+          platform: "youtube",
+          streamUrl: YOUTUBE_CHANNEL_VIDEO,
+          isLive: false,
+        },
+      ]);
+      setLoading(false);
+      return;
+    }
     const base: LiveItem[] = [
       {
         id: "1",
         title: "복지사단 야킹 라이브",
         channelName: "피터패트",
         thumbnailUrl: getYoutubeThumbnailUrl(YOUTUBE_CHANNEL_VIDEO),
-        isLive: true,
+        isLive: false,
         platform: "youtube",
         streamUrl: YOUTUBE_CHANNEL_VIDEO,
-        videoId: getVideoId(YOUTUBE_CHANNEL_VIDEO) ?? undefined,
+        videoId: fallbackVideoId,
         startTime: "20:00",
         tags: ["야킹", "라이브", "복지사단"],
       },
     ];
     setItems(base);
     setLoading(false);
-  }, []);
 
-  // 대표 영상 시청자 수 API 조회 (라이브 시 실시간 시청자, 아니면 총 조회수)
+    const fetchLive = async () => {
+      try {
+        const res = await fetch(
+          `/api/youtube/channel-live?videoId=${encodeURIComponent(fallbackVideoId)}`
+        );
+        const data = await res.json();
+        const displayId = data.liveVideoId ?? data.fallbackVideoId ?? fallbackVideoId;
+        const isLive = !!data.liveVideoId;
+        const streamUrl = `https://www.youtube.com/watch?v=${displayId}`;
+
+        setItems((prev) =>
+          prev.map((item) =>
+            item.id === "1"
+              ? {
+                  ...item,
+                  videoId: displayId,
+                  streamUrl,
+                  thumbnailUrl: getYoutubeThumbnailUrl(streamUrl),
+                  isLive,
+                }
+              : item
+          )
+        );
+      } catch {
+        // 유지
+      }
+    };
+    fetchLive();
+    const t = setInterval(fetchLive, 30000);
+    return () => clearInterval(t);
+  }, [fallbackVideoId]);
+
+  // 2) 표시 중인 영상 시청자 수·제목 조회
   useEffect(() => {
-    const videoId = getVideoId(YOUTUBE_CHANNEL_VIDEO);
+    const videoId = items[0]?.videoId ?? fallbackVideoId;
     if (!videoId) return;
 
     const fetchViewerCount = async () => {
@@ -71,29 +120,29 @@ export default function LiveGrid() {
             : data.viewCount != null
               ? data.viewCount
               : null;
-        const isLive = !!data.isLive;
 
-        setItems((prev) =>
-          prev.map((item) =>
-            item.id === "1" && item.videoId === videoId
+        setItems((prev) => {
+          if (prev.length === 0) return prev;
+          return prev.map((item) =>
+            item.id === "1"
               ? {
                   ...item,
                   viewerCount: count != null ? formatViewCount(count) : undefined,
-                  isLive,
+                  isLive: item.isLive ?? !!data.isLive,
                   title: data.title ?? item.title,
                 }
               : item
-          )
-        );
+          );
+        });
       } catch {
-        // API 실패 시 기존 표시 유지 (시청자 수만 숨김)
+        // 유지
       }
     };
 
     fetchViewerCount();
-    const interval = setInterval(fetchViewerCount, 30000); // 30초마다 라이브 여부·시청자 수 갱신
+    const interval = setInterval(fetchViewerCount, 30000);
     return () => clearInterval(interval);
-  }, []);
+  }, [items[0]?.videoId, fallbackVideoId]);
 
   if (loading) {
     return (
@@ -125,17 +174,21 @@ export default function LiveGrid() {
               border backdrop-blur-sm
               hover:scale-[1.02] hover:shadow-xl
               ${item.isLive
-                ? "section-card border-[#ff4d00]/40 shadow-lg shadow-[#ff4d00]/25"
-                : "section-card border-zinc-700/80"
+                ? "section-card border-red-500/30 shadow-lg shadow-red-500/10"
+                : "section-card"
               }
             `}
           >
             <div className="aspect-video relative bg-gradient-to-br from-zinc-800 to-zinc-900 flex items-center justify-center overflow-hidden">
-              {item.thumbnailUrl ? (
+              {item.thumbnailUrl && item.videoId && !thumbnailFailedIds.has(item.videoId) ? (
                 <img
                   src={item.thumbnailUrl}
                   alt={item.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  onError={() =>
+                    item.videoId &&
+                    setThumbnailFailedIds((prev) => new Set(prev).add(item.videoId!))
+                  }
                 />
               ) : (
                 <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-zinc-500">
@@ -165,7 +218,7 @@ export default function LiveGrid() {
               )}
             </div>
             <div className="p-4">
-              <p className="font-semibold text-foreground truncate group-hover:text-[#ff4d00] transition-colors">
+              <p className="font-semibold text-foreground truncate group-hover:text-zinc-300 transition-colors">
                 {item.title}
               </p>
               <div className="mt-1 flex flex-wrap items-center gap-2 text-sm text-zinc-500">

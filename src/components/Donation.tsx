@@ -51,8 +51,8 @@ export default function Donation() {
   return (
     <div className="max-w-2xl mx-auto space-y-6 sm:space-y-8 px-3 sm:px-0">
       <div className="section-card p-4 sm:p-6 md:p-8 border-[#262626]">
-        <h3 className="text-lg font-semibold text-[#ff4d00] mb-5 flex items-center gap-2">
-          <span className="w-1 h-5 rounded-full bg-[#ff4d00]" />
+        <h3 className="text-lg font-semibold text-foreground mb-5 flex items-center gap-2">
+          <span className="w-1 h-5 rounded-full bg-zinc-500" />
           후원 계좌
         </h3>
         <div className="space-y-3 text-foreground">
@@ -77,15 +77,15 @@ export default function Donation() {
         <button
           type="button"
           onClick={handleCopy}
-          className="mt-5 px-5 py-2.5 rounded-xl bg-[#ff4d00] hover:bg-[#e64500] text-white text-sm font-medium transition-all active:scale-[0.98]"
+          className="mt-5 px-5 py-2.5 rounded-xl bg-white text-black text-sm font-medium transition-all hover:bg-zinc-200 active:scale-[0.98]"
         >
           {copied ? "복사됨 ✓" : "계좌번호 복사"}
         </button>
       </div>
 
       <div className="section-card p-4 sm:p-6 md:p-8 border-[#262626]">
-        <h3 className="text-lg font-semibold text-[#ff4d00] mb-4 sm:mb-5 flex items-center gap-2">
-          <span className="w-1 h-5 rounded-full bg-[#ff4d00]" />
+        <h3 className="text-lg font-semibold text-foreground mb-4 sm:mb-5 flex items-center gap-2">
+          <span className="w-1 h-5 rounded-full bg-zinc-500" />
           명예의 전당 (큰손 기록)
         </h3>
         <ul className="space-y-4">
@@ -99,7 +99,7 @@ export default function Donation() {
                 <span className="font-semibold text-foreground">{d.name}</span>
               </div>
               <div className="flex flex-wrap items-center gap-2 text-sm text-zinc-400">
-                <span className="text-[#ff4d00]/90 font-medium">{d.amount}</span>
+                <span className="text-zinc-300 font-medium">{d.amount}</span>
                 {d.totalCount != null && (
                   <span className="text-zinc-500">· 총 {d.totalCount}회 후원</span>
                 )}

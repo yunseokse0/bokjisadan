@@ -1,16 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #050505;
-  --surface: #0f0f0f;
-  --surface-hover: #1a1a1a;
+  --background: #0a0a0a;
+  --surface: #141414;
+  --surface-hover: #1f1f1f;
   --border: #262626;
   --foreground: #fafafa;
   --muted: #a1a1aa;
-  --orange: #ff4d00;
-  --orange-soft: rgba(255, 77, 0, 0.15);
-  --gold: #d4af37;
-  --gold-soft: rgba(212, 175, 55, 0.2);
+  --accent: #f97316;
+  --accent-soft: rgba(249, 115, 22, 0.12);
 }
 
 @theme inline {
@@ -35,7 +33,6 @@ body {
   padding-bottom: env(safe-area-inset-bottom);
 }
 
-/* 모바일: 버튼/CTA 터치 영역 (클래스로 적용) */
 .touch-target {
   min-height: 44px;
   min-width: 44px;
@@ -45,38 +42,33 @@ body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background-image:
-    radial-gradient(ellipse 80% 50% at 50% -20%, var(--orange-soft), transparent),
-    radial-gradient(ellipse 50% 30% at 90% 60%, var(--gold-soft), transparent);
+  background: radial-gradient(ellipse 70% 40% at 50% -10%, rgba(255,255,255,0.03), transparent);
   pointer-events: none;
   z-index: 0;
 }
 
 ::selection {
-  background: var(--orange-soft);
+  background: var(--accent-soft);
   color: var(--foreground);
 }
 
 .section-card {
-  background: linear-gradient(135deg, rgba(15, 15, 15, 0.95) 0%, rgba(15, 15, 15, 0.7) 100%);
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 0.75rem;
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(8px);
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .section-card:hover {
-  border-color: rgba(255, 77, 0, 0.35);
-  box-shadow: 0 0 0 1px rgba(255, 77, 0, 0.1);
+  border-color: #404040;
+  box-shadow: 0 1px 0 0 rgba(255,255,255,0.03);
 }
 
 .section-title {
   font-weight: 700;
   letter-spacing: -0.02em;
-  background: linear-gradient(135deg, #ff6b2c 0%, #ff4d00 50%, #e64500 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--foreground);
 }
 
 input:focus,
@@ -84,10 +76,9 @@ select:focus,
 button:focus-visible,
 textarea:focus {
   outline: none;
-  box-shadow: 0 0 0 2px var(--background), 0 0 0 4px var(--orange);
+  box-shadow: 0 0 0 2px var(--background), 0 0 0 4px #404040;
 }
 
-/* 네비 호버 언더라인 */
 .nav-link-underline {
   position: relative;
 }
@@ -97,9 +88,9 @@ textarea:focus {
   left: 0;
   bottom: -2px;
   width: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--orange), var(--gold));
-  transition: width 0.25s ease;
+  height: 1px;
+  background: var(--foreground);
+  transition: width 0.2s ease;
 }
 .nav-link-underline:hover::after {
   width: 100%;

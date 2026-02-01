@@ -19,7 +19,7 @@ export default function BoardSection() {
       {/* 인기글 */}
       <section className="section-card overflow-hidden rounded-xl p-4 sm:p-6">
         <h2 className="section-title text-lg sm:text-xl md:text-2xl mb-4 flex items-center gap-2">
-          <span className="text-[#ff4d00]">🔥</span> 인기글
+          <span className="text-zinc-400">🔥</span> 인기글
         </h2>
         <ul className="divide-y divide-white/5">
           {POPULAR_POSTS.map((post) => (
@@ -28,7 +28,7 @@ export default function BoardSection() {
               className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2 sm:gap-3 py-3 first:pt-0 hover:bg-white/5 -mx-2 px-2 rounded-lg transition-colors"
             >
               <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-                <span className="text-xs font-medium text-[#ff4d00] bg-[#ff4d00]/10 px-2 py-0.5 rounded shrink-0">
+                <span className="text-xs font-medium text-zinc-400 bg-white/5 px-2 py-0.5 rounded shrink-0">
                   {post.category}
                 </span>
                 <span className="flex-1 min-w-0 font-medium text-foreground truncate">
@@ -67,7 +67,7 @@ export default function BoardSection() {
                   className="hover:bg-white/5 transition-colors cursor-pointer"
                 >
                   <td className="py-3 px-3 sm:px-4">
-                    <span className="text-xs font-medium text-[#ff4d00]/90 bg-[#ff4d00]/10 px-2 py-0.5 rounded">
+                    <span className="text-xs font-medium text-zinc-400 bg-white/5 px-2 py-0.5 rounded">
                       {post.category}
                     </span>
                   </td>

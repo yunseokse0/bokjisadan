@@ -25,7 +25,7 @@ export default function Sidebar() {
                 href={m.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 rounded-lg border border-white/5 bg-white/5 px-3 py-2 text-sm transition-colors hover:border-[#ff4d00]/40 hover:bg-[#ff4d00]/10"
+                className="flex items-center gap-2 rounded-lg border border-white/5 bg-white/5 px-3 py-2 text-sm transition-colors hover:border-white/10 hover:bg-white/10"
               >
                 <span
                   className={`h-2 w-2 shrink-0 rounded-full ${m.isLive ? "bg-red-500 animate-pulse" : "bg-zinc-500"}`}

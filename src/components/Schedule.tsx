@@ -35,7 +35,7 @@ export default function Schedule() {
               className={`
                 section-card rounded-xl p-4 transition-all
                 ${dayIndex === todayIndex
-                  ? "ring-2 ring-orange-500/50 shadow-lg shadow-orange-500/10"
+                  ? "ring-2 ring-white/20 shadow-lg"
                   : ""
                 }
               `}
@@ -47,7 +47,7 @@ export default function Schedule() {
               >
                 {label}
                 {dayIndex === todayIndex && (
-                  <span className="block text-[10px] text-orange-400/80 font-normal mt-0.5">
+                  <span className="block text-[10px] text-zinc-500 font-normal mt-0.5">
                     오늘
                   </span>
                 )}
@@ -59,9 +59,9 @@ export default function Schedule() {
                   getSlotsByDay(dayIndex).map((slot, i) => (
                     <div
                       key={i}
-                      className="rounded-lg bg-zinc-800/60 border-l-2 border-orange-500 p-2.5 text-xs hover:bg-zinc-800/80 transition-colors"
+                      className="rounded-lg bg-zinc-800/60 border-l-2 border-zinc-500 p-2.5 text-xs hover:bg-zinc-800/80 transition-colors"
                     >
-                      <span className="text-orange-400 font-medium">{slot.time}</span>
+                      <span className="text-zinc-400 font-medium">{slot.time}</span>
                       <p className="font-medium text-foreground truncate mt-0.5">
                         {slot.title}
                       </p>

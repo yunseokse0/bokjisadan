@@ -41,10 +41,10 @@ function ProfileCard({
       onMouseLeave={() => setShowTooltip(false)}
     >
       <div
-        className={`${sizeClasses[size]} rounded-full flex items-center justify-center font-bold text-[#ff4d00] overflow-hidden transition-transform duration-300 group-hover:scale-105
+        className={`${sizeClasses[size]} rounded-full flex items-center justify-center font-bold text-zinc-300 overflow-hidden transition-transform duration-300 group-hover:scale-105
           bg-gradient-to-br from-zinc-700 to-zinc-800
-          ring-2 ring-[#ff4d00]/40 ring-offset-2 ring-offset-[#050505]
-          shadow-[0_0_24px_rgba(255,77,0,0.12)]
+          ring-2 ring-white/20 ring-offset-2 ring-offset-[#0a0a0a]
+          shadow-lg
         `}
       >
         {member.imageUrl ? (
@@ -54,7 +54,7 @@ function ProfileCard({
         )}
       </div>
       <span className="font-semibold text-foreground text-sm md:text-base">{member.name}</span>
-      <span className="text-xs text-[#ff4d00]/90 font-medium">{member.roleLabel}</span>
+      <span className="text-xs text-zinc-500 font-medium">{member.roleLabel}</span>
       {member.roleDetail && (
         <span className="text-[10px] text-zinc-500 max-w-[100px] text-center truncate">
           {member.roleDetail}
@@ -88,7 +88,7 @@ function ConnectorLine() {
       variants={item}
       className="flex justify-center my-4 md:my-6"
     >
-      <div className="w-px h-8 bg-gradient-to-b from-[#ff4d00]/50 via-[#ff4d00]/30 to-transparent rounded-full" />
+      <div className="w-px h-8 bg-gradient-to-b from-white/30 via-white/20 to-transparent rounded-full" />
     </motion.div>
   );
 }
@@ -119,7 +119,7 @@ export default function OrgChart() {
         <div className="flex flex-col items-center gap-5 mt-2">
           <motion.span
             variants={item}
-            className="text-xs font-semibold text-[#ff4d00]/90 tracking-wider uppercase"
+            className="text-xs font-semibold text-zinc-500 tracking-wider uppercase"
           >
             운영진
           </motion.span>
@@ -137,7 +137,7 @@ export default function OrgChart() {
         <div className="flex flex-col items-center gap-5 mt-2">
           <motion.span
             variants={item}
-            className="text-xs font-semibold text-[#ff4d00]/90 tracking-wider uppercase"
+            className="text-xs font-semibold text-zinc-500 tracking-wider uppercase"
           >
             멤버
           </motion.span>
