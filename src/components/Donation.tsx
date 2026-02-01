@@ -49,8 +49,8 @@ export default function Donation() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto space-y-8">
-      <div className="section-card p-6 md:p-8 border-[#262626]">
+    <div className="max-w-2xl mx-auto space-y-6 sm:space-y-8 px-3 sm:px-0">
+      <div className="section-card p-4 sm:p-6 md:p-8 border-[#262626]">
         <h3 className="text-lg font-semibold text-[#ff4d00] mb-5 flex items-center gap-2">
           <span className="w-1 h-5 rounded-full bg-[#ff4d00]" />
           후원 계좌
@@ -83,8 +83,8 @@ export default function Donation() {
         </button>
       </div>
 
-      <div className="section-card p-6 md:p-8 border-[#262626]">
-        <h3 className="text-lg font-semibold text-[#ff4d00] mb-5 flex items-center gap-2">
+      <div className="section-card p-4 sm:p-6 md:p-8 border-[#262626]">
+        <h3 className="text-lg font-semibold text-[#ff4d00] mb-4 sm:mb-5 flex items-center gap-2">
           <span className="w-1 h-5 rounded-full bg-[#ff4d00]" />
           명예의 전당 (큰손 기록)
         </h3>

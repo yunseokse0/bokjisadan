@@ -10,10 +10,10 @@ const FOOTER_LINKS = [
 export default function Footer() {
   return (
     <footer
-      className="relative z-10 border-t border-white/5 bg-black/60 backdrop-blur-sm"
+      className="relative z-10 border-t border-white/5 bg-black/60 backdrop-blur-sm pb-[env(safe-area-inset-bottom)]"
       role="contentinfo"
     >
-      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:py-10 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
           <div>
             <p className="text-lg font-bold text-foreground">복지사단</p>

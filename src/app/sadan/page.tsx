@@ -7,7 +7,7 @@ export const metadata = {
 
 export default function SadanPage() {
   return (
-    <div className="relative z-10 mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+    <div className="relative z-10 mx-auto max-w-6xl px-3 sm:px-4 py-10 sm:py-12 sm:px-6 lg:px-8">
       <header className="mb-12 text-center">
         <h1 className="section-title text-3xl md:text-4xl">복지사단 소개</h1>
         <p className="mt-4 max-w-2xl mx-auto text-zinc-400 text-sm leading-relaxed">

@@ -91,7 +91,7 @@ export default function LiveGrid() {
     };
 
     fetchViewerCount();
-    const interval = setInterval(fetchViewerCount, 60000); // 1분마다 갱신
+    const interval = setInterval(fetchViewerCount, 30000); // 30초마다 라이브 여부·시청자 수 갱신
     return () => clearInterval(interval);
   }, []);
 

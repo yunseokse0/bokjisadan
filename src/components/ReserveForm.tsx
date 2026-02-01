@@ -63,7 +63,7 @@ export default function ReserveForm() {
 
       <form
         onSubmit={handleSubmit}
-        className="section-card max-w-md mx-auto p-6 md:p-8 space-y-5 border-[#262626]"
+        className="section-card max-w-md mx-auto p-4 sm:p-6 md:p-8 space-y-5 border-[#262626] mx-3 sm:mx-auto"
       >
         <div>
           <label htmlFor="name" className="block text-sm font-medium text-zinc-400 mb-1.5">

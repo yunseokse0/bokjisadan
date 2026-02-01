@@ -31,6 +31,22 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### GitHub 연동 (권장)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. [Vercel](https://vercel.com) 로그인 후 **Add New** → **Project**
+2. **Import Git Repository**에서 `yunseokse0/bokjisadan` 선택
+3. **Deploy** (기본 설정으로 배포)
+4. **Settings** → **Environment Variables**에서 필요 시 추가:
+   - `YOUTUBE_API_KEY` — YouTube Data API v3 키 (실시간 시청자 수)
+   - `TELEGRAM_BOT_TOKEN` — 게스트 예약 알림용 봇 토큰
+   - `TELEGRAM_CHAT_ID` — 알림 받을 채팅 ID
+
+배포 후 푸시할 때마다 자동으로 재배포됩니다.
+
+### CLI 배포
+
+```bash
+npm i -g vercel   # 최초 1회
+vercel            # 로그인 후 프로젝트 연결
+npm run deploy    # 프로덕션 배포
+```
