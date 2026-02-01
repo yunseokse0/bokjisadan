@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { YOUTUBE_CHANNEL_VIDEO, getYoutubeThumbnailUrl } from "@/constants/crew";
+import { YOUTUBE_CHANNEL_VIDEO, YOUTUBE_CHANNEL_ID, getYoutubeThumbnailUrl } from "@/constants/crew";
 
 function getVideoId(url: string): string | null {
   try {
@@ -35,9 +35,9 @@ export default function HeroSection() {
     }
     const fetchLive = async () => {
       try {
-        const res = await fetch(
-          `/api/youtube/channel-live?videoId=${encodeURIComponent(fallbackVideoId)}`
-        );
+        const params = new URLSearchParams({ videoId: fallbackVideoId });
+        if (YOUTUBE_CHANNEL_ID) params.set("channelId", YOUTUBE_CHANNEL_ID);
+        const res = await fetch(`/api/youtube/channel-live?${params}`);
         const data = await res.json();
         const videoIdToShow = data.liveVideoId ?? data.fallbackVideoId ?? fallbackVideoId;
         setDisplayVideoId(videoIdToShow);
@@ -52,6 +52,11 @@ export default function HeroSection() {
     const t = setInterval(fetchLive, 30000);
     return () => clearInterval(t);
   }, [fallbackVideoId]);
+
+  // 표시 영상이 바뀌면 썸네일 오류 상태 초기화 (API에서 새 fallback 내려줄 때 다시 시도)
+  useEffect(() => {
+    setThumbnailError(false);
+  }, [displayVideoId]);
 
   // 2) 표시 중인 영상의 시청자 수/조회수 조회
   useEffect(() => {

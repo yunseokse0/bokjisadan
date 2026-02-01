@@ -8,8 +8,10 @@ import { NextRequest, NextResponse } from "next/server";
  */
 export async function GET(request: NextRequest) {
   const videoId = request.nextUrl.searchParams.get("videoId");
+  const paramChannelId = request.nextUrl.searchParams.get("channelId")?.trim() || null;
   const apiKey = process.env.YOUTUBE_API_KEY;
   const envChannelId = process.env.YOUTUBE_CHANNEL_ID?.trim() || null;
+  const channelIdFromEnvOrParam = envChannelId || paramChannelId;
 
   if (!apiKey) {
     return NextResponse.json(
@@ -18,7 +20,7 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  let channelId: string | null = envChannelId;
+  let channelId: string | null = channelIdFromEnvOrParam;
 
   // 채널 ID가 없으면 영상으로 채널 ID 조회 (비공개 영상이면 items 비어 있음)
   if (!channelId && videoId) {
@@ -36,13 +38,13 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  const fallbackVideoId = videoId ?? null;
+  let fallbackVideoId = videoId ?? null;
   if (!channelId) {
     return NextResponse.json({
       liveVideoId: null,
       fallbackVideoId,
       isLive: false,
-      message: envChannelId ? "채널에서 라이브 없음" : "YOUTUBE_CHANNEL_ID를 설정하면 비공개 영상이어도 채널 라이브를 조회할 수 있습니다.",
+      message: channelIdFromEnvOrParam ? "채널에서 라이브 없음" : "YOUTUBE_CHANNEL_ID(서버 env 또는 쿼리 channelId)를 설정하면 비공개 영상이어도 채널 라이브를 조회할 수 있습니다.",
     }, { status: 200 });
   }
 
@@ -60,6 +62,23 @@ export async function GET(request: NextRequest) {
     const searchData = await searchRes.json();
     const liveItem = searchData.items?.[0];
     const liveVideoId = liveItem?.id?.videoId ?? null;
+
+    // 라이브 없을 때: 채널 ID가 있으면 채널 최신 업로드 1개를 fallback으로 사용 (비공개 영상 404 방지)
+    if (!liveVideoId && envChannelId) {
+      try {
+        const latestRes = await fetch(
+          `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&order=date&type=video&maxResults=1&key=${apiKey}`,
+          { next: { revalidate: 300 } }
+        );
+        if (latestRes.ok) {
+          const latestData = await latestRes.json();
+          const latestId = latestData.items?.[0]?.id?.videoId ?? null;
+          if (latestId) fallbackVideoId = latestId;
+        }
+      } catch {
+        // fallbackVideoId는 요청의 videoId 유지
+      }
+    }
 
     return NextResponse.json({
       liveVideoId,

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { YOUTUBE_CHANNEL_VIDEO, getYoutubeThumbnailUrl } from "@/constants/crew";
+import { YOUTUBE_CHANNEL_VIDEO, YOUTUBE_CHANNEL_ID, getYoutubeThumbnailUrl } from "@/constants/crew";
 
 interface LiveItem {
   id: string;
@@ -75,9 +75,9 @@ export default function LiveGrid() {
 
     const fetchLive = async () => {
       try {
-        const res = await fetch(
-          `/api/youtube/channel-live?videoId=${encodeURIComponent(fallbackVideoId)}`
-        );
+        const params = new URLSearchParams({ videoId: fallbackVideoId });
+        if (YOUTUBE_CHANNEL_ID) params.set("channelId", YOUTUBE_CHANNEL_ID);
+        const res = await fetch(`/api/youtube/channel-live?${params}`);
         const data = await res.json();
         const displayId = data.liveVideoId ?? data.fallbackVideoId ?? fallbackVideoId;
         const isLive = !!data.liveVideoId;

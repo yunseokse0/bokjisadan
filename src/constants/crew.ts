@@ -6,6 +6,9 @@
 /** 복지사단 유튜브 채널 · 대표 영상 링크 */
 export const YOUTUBE_CHANNEL_VIDEO = "https://www.youtube.com/watch?v=Ea3FhctM0v8";
 
+/** 채널 ID (UC로 시작). 서버 env 없을 때 API에 전달용. 채널 페이지 URL의 /channel/UC... 부분 */
+export const YOUTUBE_CHANNEL_ID = "UCTjLrH_VkssSD-VC5Qog-VA";
+
 /** 영상 ID로 유튜브 썸네일 URL 반환 (hqdefault: 480x360) */
 export function getYoutubeThumbnailUrl(videoUrlOrId: string): string {
   const id = videoUrlOrId.includes("youtube.com")

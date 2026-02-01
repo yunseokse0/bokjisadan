@@ -38,7 +38,7 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 3. **Deploy** (기본 설정으로 배포)
 4. **Settings** → **Environment Variables**에서 필요 시 추가:
    - `YOUTUBE_API_KEY` — YouTube Data API v3 키 (실시간 시청자 수, 채널 라이브 조회)
-   - `YOUTUBE_CHANNEL_ID` — 채널 ID (예: `UCxxxxxxxxxxxx`). **대표 영상이 비공개여도** 채널 라이브를 조회하려면 필수. 채널 페이지 URL의 `/channel/UC...` 부분 또는 [YouTube Data API](https://developers.google.com/youtube/v3/getting-started)로 확인
+   - `YOUTUBE_CHANNEL_ID` — 채널 ID (예: `UCxxxxxxxxxxxx`). **대표 영상이 비공개여도** 채널 라이브·최신 영상 fallback 조회에 필요. 채널 페이지 URL의 `/channel/UC...` 부분 또는 [YouTube Data API](https://developers.google.com/youtube/v3/getting-started)로 확인. **Vercel env가 적용 안 되면** `src/constants/crew.ts`의 `YOUTUBE_CHANNEL_ID`에 채널 ID를 직접 넣어도 됨 (쿼리로 API에 전달됨)
    - `TELEGRAM_BOT_TOKEN` — 게스트 예약 알림용 봇 토큰
    - `TELEGRAM_CHAT_ID` — 알림 받을 채팅 ID
 
