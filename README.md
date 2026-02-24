@@ -2,6 +2,27 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+### 로컬 API 테스트 (라이브/채널 영상 API)
+
+1. **환경 변수** — 프로젝트 루트에 `.env.local` 생성 후:
+   ```
+   YOUTUBE_API_KEY=여기에_Google_Cloud_API_키
+   ```
+   (채널 ID는 `src/constants/crew.ts`의 `YOUTUBE_CHANNEL_ID`에 이미 있으므로 env는 선택)
+
+2. **개발 서버 실행:**
+   ```bash
+   npm run dev
+   ```
+
+3. **브라우저:** [http://localhost:3000](http://localhost:3000) — 히어로/라이브 섹션이 API로 라이브·최신 영상 ID를 가져옴
+
+4. **API 직접 확인:** [http://localhost:3000/api/youtube/channel-live?videoId=DNH6taYZlA4&channelId=UCTjLrH_VkssSD-VC5Qog-VA](http://localhost:3000/api/youtube/channel-live?videoId=DNH6taYZlA4&channelId=UCTjLrH_VkssSD-VC5Qog-VA) — JSON에 `liveVideoId`, `fallbackVideoId` 등 확인
+
+5. **스텝별 검증·벨리데이션:** [http://localhost:3000/api/youtube/validate?videoId=DNH6taYZlA4&channelId=UCTjLrH_VkssSD-VC5Qog-VA](http://localhost:3000/api/youtube/validate?videoId=DNH6taYZlA4&channelId=UCTjLrH_VkssSD-VC5Qog-VA) — Step 1~5 검증 결과(환경 변수, ID 포맷, channel-live 응답)를 JSON으로 확인
+
+---
+
 First, run the development server:
 
 ```bash

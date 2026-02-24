@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { isValidVideoId, isValidChannelId } from "@/lib/youtube-validate";
 
 export const dynamic = "force-dynamic";
 
@@ -6,14 +7,42 @@ export const dynamic = "force-dynamic";
  * 채널의 현재 라이브 방송 영상 ID 조회
  * - YOUTUBE_CHANNEL_ID가 있으면: 해당 채널로 바로 라이브 검색
  * - 없으면: videoId로 채널 ID 조회 후 라이브 검색 (비공개 영상이면 채널 정보 못 가져옴)
- * GET /api/youtube/channel-live?videoId=Ea3FhctM0v8
+ * GET /api/youtube/channel-live?videoId=xxx&channelId=UCxxx
  */
 export async function GET(request: NextRequest) {
-  const videoId = request.nextUrl.searchParams.get("videoId");
-  const paramChannelId = request.nextUrl.searchParams.get("channelId")?.trim() || null;
+  const rawVideoId = request.nextUrl.searchParams.get("videoId");
+  const rawChannelId = request.nextUrl.searchParams.get("channelId")?.trim() || null;
   const apiKey = process.env.YOUTUBE_API_KEY;
   const envChannelId = process.env.YOUTUBE_CHANNEL_ID?.trim() || null;
-  const channelIdFromEnvOrParam = envChannelId || paramChannelId;
+  const channelIdFromEnvOrParam = envChannelId || rawChannelId;
+
+  // 입력 벨리데이션: videoId가 있으면 11자 포맷 검증
+  if (rawVideoId != null && rawVideoId !== "" && !isValidVideoId(rawVideoId)) {
+    return NextResponse.json(
+      {
+        error: "validation",
+        message: "videoId는 11자 영숫자/하이픈/언더스코어만 허용됩니다.",
+        liveVideoId: null,
+        fallbackVideoId: null,
+        isLive: false,
+      },
+      { status: 400 }
+    );
+  }
+  if (rawChannelId != null && rawChannelId !== "" && !isValidChannelId(rawChannelId)) {
+    return NextResponse.json(
+      {
+        error: "validation",
+        message: "channelId는 UC로 시작하는 24자 이상 형식이어야 합니다.",
+        liveVideoId: null,
+        fallbackVideoId: rawVideoId ?? null,
+        isLive: false,
+      },
+      { status: 400 }
+    );
+  }
+
+  const videoId = rawVideoId?.trim() || null;
 
   if (!apiKey) {
     return NextResponse.json(
